@@ -1,0 +1,7 @@
+.modal .modal-body{
+	alignment-baseline:central;
+}
+.modal .modal-body input{
+	height:30px;
+	width:200px;
+}
