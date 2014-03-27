@@ -24,7 +24,10 @@ def index():
 def login():
     return render_template('login.html')
 
-@app.route('/editor/<int:id>')
+@app.route('/editor/<int:id>', methods=[''])
+def editor():
+    return render_template('tool.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=int(environ.get('PORT',5000)))
