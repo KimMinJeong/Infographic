@@ -17,7 +17,11 @@
 	margin: 10px 10px 10px 0;
 	z-index: 2;
 }
-.accordion-group .accordion-heading a img{
+.panel-group .panel-heading a img{
 	width: 64px;
 	height: 64px;
+}
+
+.panel .panel-heading{
+	background-color: #FFFFFF;
 }
