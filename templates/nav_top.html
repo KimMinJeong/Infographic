@@ -18,7 +18,6 @@
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
       	<li><a href="{{url_for('editor')}}">Editor</a></li>
-      	<li>Saved file</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li>
@@ -41,19 +40,15 @@
 		      </div>
 		      
 		      <div class="modal-body">
-		     	<input type="text" placeholder="Email Address">
+		     	<input type="email" class="form-control" placeholder="Email Address">
 		     	<br/>
+		     	<input type="text" class="form-control" placeholder="First Name">
 		     	<br/>
-		     	<input type="text" placeholder="First Name">
+		     	<input type="text" class="form-control" placeholder="Second Name">
 		     	<br/>
+		     	<input type="password" class="form-control" placeholder="Password">
 		     	<br/>
-		     	<input type="text" placeholder="Second Name">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Password">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Confirm Password">
+		     	<input type="password" class="form-control" placeholder="Confirm Password">
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-primary">Create Account</button>
@@ -71,10 +66,9 @@
 		      </div>
 		      
 		      <div class="modal-body">
-		     	<input type="text" placeholder="Email Address">
+		     	<input type="email" class="form-control" placeholder="Email Address">
 		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Password">
+		     	<input type="password" class="form-control" placeholder="Password">
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-primary">Login</button>

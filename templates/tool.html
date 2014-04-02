@@ -135,46 +135,39 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
-		counter =0;
-		$('.draggable').draggable({
-			helper:'clone',
-			stop: function(ev, ui){
-				var pos = $(ui.helper).offset();
-				objName.css({
-					"left":pos.left,
-					"top": pos.top
-				});
-				$(objName).draggable({
-					containment: 'parent',
-					stop : function(ev , ui){
-						var top = ui.position.top; 
-    					var left = ui.position.left;
-						var pos = $(ui.helper).offset();
-						//console.log($(this).attr("id"));
-						//console.log(pos.left);
-						//console.log(pos.top);
-					}
-				});
-			}
-		});
-		$('#myCanvas').droppable({
-			drop: function(ev, ui){
-				if (ui.helper.attr('id').search(draggable)!= -1)
-				{
-					counter++;
-					var element =$(ui.draggable).clone();
-					element.addClass=("tempclass");
-					$(this).append(element);
-					$('.tempclass').attr("id", "clonediv" + counter);
-					$('#clonediv'+ counter).removeClass("tempclass");
-					draggedNumber = ui.helper.attr('id').search(draggable);
-					itemDragged = "dragged" + RegExp.$1;
-					//console.log(itemDragged);
-					$('#clonediv'+counter).addClass(itemDragged);
-				}
-			}
-		});
-	});
+   $(document).ready(function(){
+      counter =0;
+      $(".draggable").draggable({
+         helper:'clone',
+    containment: 'myCanvas',
+         stop: function(ev, ui){
+            var pos = $(ui.helper).offset();
+            $(objName).css({"left":pos.left,"top":pos.top});
+               $(objName).removeClass("draggable");
+            $(objName).draggable({
+               containment: 'myCanvas',
+               stop : function(ev , ui){
+                  var pos = $(ui.helper).offset();                  
+               }
+            });
+         }
+      });
+      $("#myCanvas").droppable({
+         drop: function(ev, ui){
+            if (ui.helper.attr('id').search(/drag[0-9]/)!= -1)
+            {
+               counter++;
+               var element =$(ui.draggable).clone();
+               element.addClass=("tempclass");
+               $(this).append(element);
+               $('.tempclass').attr("id", "clonediv" + counter);
+               $('#clonediv'+ counter).removeClass("tempclass");
+               draggedNumber = ui.helper.attr('id').search(/drag([0-9])/);
+               itemDragged = "dragged" + RegExp.$1;
+               $('#clonediv'+counter).addClass(itemDragged);
+            }
+         }
+      });
+   });
 </script>
 {% endblock %}
