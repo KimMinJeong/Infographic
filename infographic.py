@@ -20,13 +20,20 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+
 @app.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
 
-@app.route('/editor/<int:id>', methods=[''])
+
+@app.route('/editor', methods=['GET'])
 def editor():
     return render_template('tool.html')
+
+
+@app.route('/test', methods=['GET'])
+def test():
+    return render_template('test.html')
 
 
 if __name__ == '__main__':

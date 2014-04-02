@@ -5,3 +5,19 @@
 	height:30px;
 	width:200px;
 }
+.ToolCanvas .myCanvas, .ToolCanvas .droppable{
+	width:800px; 
+	height:1000px;
+	border:1px solid #000000;
+	z-index: 1; /*레이어 겹칠때 숫자가 클수록 위*/
+}
+.accordion-body .draggable { 
+	padding: 0.5em;
+	float: left;
+	margin: 10px 10px 10px 0;
+	z-index: 2;
+}
+.accordion-group .accordion-heading a img{
+	width: 64px;
+	height: 64px;
+}
