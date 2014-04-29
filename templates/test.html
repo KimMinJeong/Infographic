@@ -1,103 +1,31 @@
 {% extends "nav_top.html"%}
 {% block body %}
 {{super()}}
-<div class="intro-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="intro-message">
-                        <h1>Create Your Story</h1>
-                        <h3>Infographics</h3>
-                        <hr class="intro-divider">
-                        <button class="btn btn-default"><a href="{{url_for('editor')}}">Get Started</a></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.intro-header -->
-    
-    <div class="content-section-a">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"> </div>
-                    <h2 class="section-heading">About
-                        <br>Infographics</h2>
-                    <p class="lead"> <a target="_blank" href="http://join.deathtothestockphoto.com/">Visit their website</a> to become a member.</p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                    <img class="img-responsive" alt="">
-                </div>
-            </div>
-        </div>
-        <!-- /.container -->
+	<script type="text/javascript">
+$(document).ready(function() {
+    $("#droppable").droppable({
+        accept: '.ui-widget-content',
+        drop: function(event, ui) {
+        if($(ui).parent(":not(:has(#id1))")){
+            $(this).append($(ui.helper).clone().attr("id", "id1"));
+        }
+            $("#id1").draggable({
+                containment: 'parent',
+            });
+        }
+    }); 
+    $(".ui-widget-content").draggable({helper: 'clone'});
+});
+</script>
 
-    </div>
-    <!-- /.content-section-a -->
+<div class="demo">
 
-    <div class="content-section-b">
+<div id="draggable" class="ui-widget-content">
+    <p>Drag me around</p>
+</div>
 
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">3D Device Mockups
-                        <br>by PSDCovers</h2>
-                    <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop actions by PSDCovers! <a target="_blank" href="http://www.psdcovers.com/">Visit their website</a> to download some of their awesome, free photoshop actions!</p>
-                </div>
-                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.content-section-b -->
-    <div class="content-section-a">
-
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-5 col-sm-6">
-                    <hr class="section-heading-spacer">
-                    <div class="clearfix"></div>
-                    <h2 class="section-heading">Google Web Fonts and
-                        <br>Font Awesome Icons</h2>
-                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
-                </div>
-                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
-                </div>
-            </div>
-
-        </div>
-        <!-- /.container -->
-    </div>
-    <!-- /.banner -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-inline">
-                        <li><a href="#home">Home</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#about">About</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#services">Services</a>
-                        </li>
-                        <li class="footer-menu-divider">&sdot;</li>
-                        <li><a href="#contact">Contact</a>
-                        </li>
-                    </ul>
-                    <p class="copyright text-muted small">Copyright &copy; Your Company 2013. All Rights Reserved</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+<div id="droppable" class="ui-widget-header">
+    <p>Drop here</p>
+</div>
+</div>
 {% endblock %}
