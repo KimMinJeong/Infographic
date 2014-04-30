@@ -1,31 +1,50 @@
 {% extends "nav_top.html"%}
 {% block body %}
 {{super()}}
+    <canvas id="canvas" width="300" height="300"> </canvas>
+	<style>
+		 canvas {
+            border:1px solid red;
+        }
+	</style>
 	<script type="text/javascript">
-$(document).ready(function() {
-    $("#droppable").droppable({
-        accept: '.ui-widget-content',
-        drop: function(event, ui) {
-        if($(ui).parent(":not(:has(#id1))")){
-            $(this).append($(ui.helper).clone().attr("id", "id1"));
-        }
-            $("#id1").draggable({
-                containment: 'parent',
-            });
-        }
-    }); 
-    $(".ui-widget-content").draggable({helper: 'clone'});
-});
-</script>
-
-<div class="demo">
-
-<div id="draggable" class="ui-widget-content">
-    <p>Drag me around</p>
-</div>
-
-<div id="droppable" class="ui-widget-header">
-    <p>Drop here</p>
-</div>
-</div>
+		var canvas;
+		var ctx;
+		var canvasOffset;
+		var offsetX;
+		var offsetY;
+		
+		canvas = document.getElementById("canvas");
+		ctx = canvas.getContext("2d");
+		
+		canvasOffset = $('#canvas').offset();
+		offsetX = canvasOffset.left;
+		offsetY = canvasOffset.top;
+		
+		$("#canvas").on('mousedown', function(event){
+			handleMouseDown(event);
+		});
+		
+		var isDrawing = false;
+		var startX;
+		var startY;
+		
+		function handleMouseDown(event){
+			var mouseX = parseInt(event.clientX - offsetX);
+			var mouseY = parseInt(event.clientY - offsetY);
+			
+			if(!isDrawing)
+			{
+				canvas.style.cursor = "crosshair";
+				startX = mouseX;
+				startY = mouseY;
+			}
+			else{
+				ctx.rect(startX, startY, mouseX - startX, mouseY - startY);
+				ctx.stroke();
+				canvas.style.cursor = "default";
+			}
+			isDrawing = !isDrawing;
+		}
+	</script>
 {% endblock %}

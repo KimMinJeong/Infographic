@@ -17,6 +17,13 @@
 	margin: 10px 10px 10px 0;
 	z-index: 2;
 }
+.color-box {
+	float:left;
+	width:30px;
+	height:30px;
+	margin:5px;
+	border: 1px solid white;
+}
 .panel-group .panel-heading a img{
 	width: 64px;
 	height: 64px;
@@ -25,4 +32,45 @@
 .panel .panel-heading{
 	background-color: #FFFFFF;
 }
+.intro-header .intro-message{
+	background: url(../static/img/bg.PNG);
+}
 
+#text-H1{
+	font-weight : bold;
+	font-size: 55px;
+	font-family:Times;
+} 
+#text-H2{
+	font-weight : bold;
+	font-size: 40px;
+	font-family:"Franklin Gothic Medium";
+} 
+#text-H3{
+	font-weight : bold;
+	font-size: 35px;
+	font-family:Impact;
+} 
+#text-H4{
+	font-weight : bold;
+	font-size: 30px;
+	font-family:"Script MT Bold";
+} 
+#text-T1 {
+	font-weight : bold;
+	font-size: 20px;
+	font-family:Tunga;
+}
+#collapseFive .panel-body #mainlist-text ul{
+  list-style-type: none;
+}
+.color-box{
+	z-index: 999;
+}
+
+#img_twitter{
+	fill: pink;
+}
+ul {
+	list-style: none;
+}
