@@ -14,7 +14,7 @@ import json, requests
 
 
 app = Flask(__name__)
-
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL','post')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -35,6 +35,9 @@ def editor():
 def test():
     return render_template('test.html')
 
+@app.route('/test2',methods=['GET'])
+def test2():
+    return render_template('t2.html')
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=int(environ.get('PORT',5000)))

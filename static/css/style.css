@@ -5,7 +5,7 @@
 	height:30px;
 	width:200px;
 }
-.ToolCanvas .myCanvas, .ToolCanvas .droppable{
+.myCanvas{
 	width:800px; 
 	height:1000px;
 	border:1px solid #000000;
@@ -68,9 +68,24 @@
 	z-index: 999;
 }
 
-#img_twitter{
-	fill: pink;
-}
 ul {
 	list-style: none;
 }
+
+.modal-wrapper .wrapper-left .modal-container ul li a{
+ background-image: url(../static/img/1396436927_MB__Champions_League.png);
+}
+
+.modal-content 
+{
+	width: 700px;
+	height : 500px;
+}
+
+.product
+{
+	width: 50px;
+	height: 50px;
+}
+
+
