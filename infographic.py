@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, request, g, session, flash, redirect, \
     url_for, jsonify, json
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from functools import wraps
 from os import environ
 from os.path import dirname, join
@@ -8,13 +11,12 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.sql import functions
 from sqlalchemy.types import DateTime, Boolean
 from sqlalchemy import create_engine
-
 import hashlib
 import os
 import urllib
 import json, requests
 import socket
-import logging
+
 
 app = Flask(__name__)
 SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:1111@localhost:5432/infographic'
@@ -23,6 +25,12 @@ db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config.from_envvar('FLASKR_SETTING', silent=True)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message = u"Please log in to access this page"
+login_manager.session_protection = "strong"
 
 
 class User(db.Model):
@@ -40,7 +48,20 @@ class User(db.Model):
         self.email = email
         self.name = name
         self.password = password
+        
+    def is_authenticated(self):
+        return True
     
+    def is_active(self):
+        return True
+    
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return unicode(self.id)
+    
+
     def __repr__(self):
         return "<User id={0!r}, email={1!r}, name={2!r}, password={3!r}>".\
                 format(self.id, self.email, self.name, self.password)
@@ -86,26 +107,29 @@ class Comment(db.Model):
         return "<Comment id={0!r}, comment={1!r}, user_id={2!r}, post_id{3!r}>".\
                 format(self.id, self.comment, self.user_id, self.post_id)
 
+
 db.session.commit()
 
+
+@app.before_request
+def before_request():
+    if not session.get('user_email') is None:
+        g.user = User.query.filter_by(email=session.get('user_email')).first()
+
+
+def after_login(resp):   
+    user = User.query.filter(User.email==resp.email).first() 
+    if user is None:
+        flash(u'접근권한이 없습니다. 관리자에게 문의하세요') 
+    else:
+        session['user_email'] = resp.email                
+        return redirect(url_for('board_list')) 
+    
+    
 @app.route('/', methods=['GET'])
 def index():
+    flash(u'welcome infographic')
     return render_template('index.html')
-
-
-@app.route('/test', methods=['GET'])
-def test():
-    return render_template('test.html')
-
-
-@app.route('/editor', methods=['GET'])
-def editor():
-    return render_template('tool.html')
-
-
-@app.route('/test2',methods=['GET'])
-def test2():
-    return render_template('t2.html')
 
 
 @app.route('/signup',methods=['POST']) 
@@ -116,30 +140,73 @@ def signup():
     db_insert = User(email, name, password)
     db.session.add(db_insert)
     db.session.commit()
+    flash(u'You were signed in')
+    return redirect(url_for('login_page'))
 
-    return redirect(url_for('index'))
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
+
+
+@app.route('/login_page', methods=['GET'])
+def login_page():
+    return render_template('login.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    login = User.query.get(id)
-    error = None
-    if request.method == 'POST':
-        if request.form['login_email'] != login.email:
-            error = 'Invalid Username'
-        elif request.form['login_pwd'] != login.password:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('index'))
-    return render_template('nav_top.html', error=error)   
- 
- 
+    if request.method == 'GET':
+        return render_template('login.html',)
+    email = request.form['login_email']
+    password = request.form['login_pwd']
+    registered_user = User.query.filter_by(email=email, password=password).first()
+    if registered_user is None:
+        flash(u'Email or Password is invalid', 'error')
+        return redirect(url_for('login'))
+    login_user(registered_user)
+    print "login"
+    session.permanant = True
+    flash(u'Logged in successfully')
+    return redirect(request.args.get('next') or url_for('index'))
+
+
+@app.route('/t2',methods=['GET'])
+def test2():
+    return render_template('t2.html')
+
+
+@app.route('/editor', methods=['GET'])
+@login_required
+def editor():
+    return render_template('tool.html')
+
+
+@app.route('/savedInfo', methods=['GET'])
+@login_required
+def savedInfo():
+    return render_template('savedInfo.html')
+
+
+@app.route('/editor', methods=['POST'])
+@login_required
+def new_subject():
+    
+    subject = request.form["subject"]
+    
+    db_insert = Post(subject)
+    db.session.add(db_insert)
+    db.session.commit()
+     
+    return redirect(url_for('editor'))
+
+
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop()
-    return redirect('/index')
+    logout_user()
+    return redirect(url_for('index'))
+    
     
 @app.errorhandler(404)
 def page_not_found(e):

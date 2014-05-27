@@ -6,9 +6,9 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <span class="icon-bar"> </span>
+        <span class="icon-bar"> </span>
+        <span class="icon-bar"> </span>
       </button>
       <a class="navbar-brand" href="#">InfoGraphics</a>
     </div>
@@ -18,67 +18,49 @@
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
       	<li><a href="{{url_for('editor')}}">Editor</a></li>
+      	<li><a href="{{url_for('savedInfo')}}">saved infographics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li>
       		<button class="btn btn-primary" data-toggle="modal" data-target="#signModal">SignUp</button>
       	</li>
        	<li>
-       		<button class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+       		<form action="{{url_for('login_page')}}">
+       		<input type="submit" class="btn btn-primary" value="Login" />
+       		</form>
+		</li>
+		<li>
+			<button class="btn btn-danger"><a href="{{url_for('logout')}}">Logout</a></button>
 		</li>
       </ul>
     </div><!-- /.navbar-collapse -->
-    
+
    
    	<div class="col-md-12 col-xs-12 col-sm-12">
    	  <form action="{{ url_for('signup') }}" class="form-horizontal" method="post">
-	    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">Create your account!!</h4>
-		      </div>
-		      
-		      <div class="modal-body">
-		     	<input type="email" name="email" class="form-control" placeholder="Email Address">
-		     	<br/>
-		     	<input type="text" name="name" class="form-control" placeholder="Name">
-		     	<br/>
-		     	<input type="password" name="password" class="form-control" placeholder="Password">
-		     	<br/>
-		     	<input type="password" name="password2" class="form-control" placeholder="Confirm Password">
-		      </div>
-		      <div class="modal-footer">
-		        <input type="submit" class="btn btn-primary create_account_btn" value="Create Account">
-		      </div>
-		    </div>
-		  </div>
-		</div><!-- /.modal-->
-		</form>
-		
-		<form action="{url_for('login')}" method="get">
-		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">LOGIN</h4>
-		      </div>
-		      
-		      <div class="modal-body">
-		     	<input type="email" name="login_email" class="form-control" placeholder="Email Address">
-		     	<br/>
-		     	<input type="password" name="login_pwd" class="form-control" placeholder="Password">
-		      </div>
-		      <div class="modal-footer">
-		        <input type="submit" class="btn btn-primary login_btn" value="Login">
-		       	<br/>
-		        <small>Fot Email or Password</small><a href="#">Click Here!</a>
-		      </div>
-		    </div>
-		  </div>
-		</div><!-- /.modal-->
+		    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title">Create your account!!</h4>
+			      </div>
+			      
+			      <div class="modal-body">
+			     	<input type="email" name="email" class="form-control" placeholder="Email Address">
+			     	<br/>
+			     	<input type="text" name="name" class="form-control" placeholder="Name">
+			     	<br/>
+			     	<input type="password" name="password" class="form-control" placeholder="Password">
+			     	<br/>
+			     	<input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+			      </div>
+			      <div class="modal-footer">
+			        <input type="submit" class="btn btn-primary create_account_btn" value="Create Account">
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- /.modal-->
 		</form>
 	</div>
 	
@@ -86,9 +68,4 @@
 </nav>
 
 
-<script type="text/javascript">
-	$('#myModal').on('hidden', function () {
-  		$('#myModal').modal({ backdrop:'static'});
-	});
-</script>
 {% endblock %}

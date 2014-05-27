@@ -129,7 +129,7 @@
 								<li id="text-H2" data-oType="text" data-tType="H2" class="draggable_t"><a>Subtitle</a></li>
 								<li id="text-H3" data-oType="text" data-tType="H3" class="draggable_t"><a>Subtitle 2</a></li>
 								<li id="text-H4" data-oType="text" data-tType="H4" class="draggable_t"><a>Subtitle 3</a></li>
-								<li id="text-T1" data-oType="text" data-tType="T1" class="draggable_t"><a>Body Text</a></li>
+								<li id="text-H5" data-oType="text" data-tType="H5" class="draggable_t"><a>Body Text</a></li>
 							</ul>
 			      		</div>
 			    	</div>
@@ -159,23 +159,22 @@ $(function(){
 	var $text_H2 = $('<textarea id="text_H2">SubTitle</textarea>');
 	var $text_H3 = $('<textarea id="text_H3">SubTitle2</textarea>');
 	var $text_H4 = $('<textarea id="text_H4">SubTitle3</textarea>');
-	var $text_T1 = $('<textarea id="text_H5">Body Text</textarea>');
+	var $text_H5 = $('<textarea id="text_H5">Body Text</textarea>');
 	var resizeOpts = { handles : "all", autoHide: false};
 	
 	$('.draggable_t').draggable({
 		helper :'clone',
 		start: function(){
 			$('#droppable').append($text_H1);
-			$('#droppable').append($text_H2);
-			$('#droppable').append($text_H3);
-			$('#droppable').append($text_H4);
-			$('#droppable').append($text_T1);
 			counts[0]++;
 		}
 	});
 	$('#droppable').droppable({
 		accept :'.draggable_t',
-		drop: handleDropEvent
+		drop: handleDropEvent,
+		stop: function(event, ui){
+			$(event.)
+		}
 	}); 
 	function handleDropEvent(event, ui)
 	{
