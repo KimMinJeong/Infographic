@@ -117,15 +117,6 @@ def before_request():
         g.user = User.query.filter_by(email=session.get('user_email')).first()
 
 
-def after_login(resp):   
-    user = User.query.filter(User.email==resp.email).first() 
-    if user is None:
-        flash(u'접근권한이 없습니다. 관리자에게 문의하세요') 
-    else:
-        session['user_email'] = resp.email                
-        return redirect(url_for('board_list')) 
-    
-    
 @app.route('/', methods=['GET'])
 def index():
     flash(u'welcome infographic')
