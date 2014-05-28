@@ -21,7 +21,7 @@
 <!-- /.intro-header -->
     
 <!-- Modal -->
-<form action="{{ url_for('new_subject')}}" method="post">
+<form action="{{ url_for('new_subject', s = subject)}}" method="post">
 	<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-sm">
 	    <div class="modal-content">
@@ -30,7 +30,7 @@
 	        <h4 class="modal-title" id="mySmallModalLabel">Subject</h4>
 	      </div>
 	      <div class="modal-body">
-	        <input type="text" id="subject" />
+	        <input type="text" name="subject" />
 	      </div>
 	      <div class="modal-footer">
 	        <input type="button" class="btn btn-default" data-dismiss="modal" value="Close"/>

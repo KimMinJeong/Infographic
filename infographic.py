@@ -144,7 +144,6 @@ def load_user(id):
 def login_page():
     return render_template('login.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -158,38 +157,28 @@ def login():
     login_user(registered_user)
     print "login"
     session.permanant = True
+    session['user_email'] = email
     flash(u'Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
+   
 
-
-@app.route('/t2',methods=['GET'])
-def test2():
-    return render_template('t2.html')
-
-
-@app.route('/editor', methods=['GET'])
+@app.route('/editor/<string:s>', methods=['GET'])
 @login_required
-def editor():
-    return render_template('tool.html')
+def editor(s):
+    return render_template('editor.html')
+
+
+@app.route('/editor', methods=['POST'])
+@login_required
+def new_subject():
+    subject = request.form["subject"]
+    return render_template('editor.html', subject=subject)
 
 
 @app.route('/savedInfo', methods=['GET'])
 @login_required
 def savedInfo():
     return render_template('savedInfo.html')
-
-
-@app.route('/editor', methods=['POST'])
-@login_required
-def new_subject():
-    
-    subject = request.form["subject"]
-    
-    db_insert = Post(subject)
-    db.session.add(db_insert)
-    db.session.commit()
-     
-    return redirect(url_for('editor'))
 
 
 @app.route('/logout')

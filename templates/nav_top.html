@@ -17,23 +17,21 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
-      	<li><a href="{{url_for('editor')}}">Editor</a></li>
+      	<li><a href="{{url_for('editor', s = subject)}}">Editor</a></li>
       	<li><a href="{{url_for('savedInfo')}}">saved infographics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li>
-      		<button class="btn btn-primary" data-toggle="modal" data-target="#signModal">SignUp</button>
+      		<button class="btn btn-primary" id="signup_button" data-toggle="modal" data-target="#signModal">SignUp</button>
       	</li>
        	<li>
        		<form action="{{url_for('login_page')}}">
-       		<input type="submit" class="btn btn-primary" value="Login" />
+       		<input type="submit" class="btn btn-primary" id="login_button" value="Login" />
        		</form>
 		</li>
-		{% if g.email==session['user_email'] %}
 		<li>
-			<button class="btn btn-danger"><a href="{{url_for('logout')}}">Logout</a></button>
+			<button class="btn btn-danger" id="logout_button"><a href="{{url_for('logout')}}">Logout</a></button>
 		</li>
-		{% endif %}
       </ul>
     </div><!-- /.navbar-collapse -->
 
@@ -69,5 +67,17 @@
   </div><!-- /.container-->
 </nav>
 
+{% if session.get('user_email') %}
+<script>
+		$("#login_button").hide();
+		$("#logout_button").show();
+		$("#signup_button").hide();
+</script>
 
+{% else %}
+<script>
+		$("#logout_button").hide();
+		$("#login_button").show();
+</script>
+{% endif %}
 {% endblock %}
