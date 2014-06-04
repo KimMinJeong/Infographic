@@ -109,6 +109,9 @@ class Comment(db.Model):
 
 
 db.session.commit()
+@app.route('/t2', methods=['GET'])
+def t2():
+    return render_template('t2.html')
 
 
 @app.before_request
@@ -119,11 +122,10 @@ def before_request():
 
 @app.route('/', methods=['GET'])
 def index():
-    flash(u'welcome infographic')
     return render_template('index.html')
 
 
-@app.route('/signup',methods=['POST']) 
+@app.route('/signup', methods=['POST']) 
 def signup():
     email = request.form["email"]
     name = request.form["name"]
@@ -144,6 +146,7 @@ def load_user(id):
 def login_page():
     return render_template('login.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -156,35 +159,47 @@ def login():
         return redirect(url_for('login'))
     login_user(registered_user)
     print "login"
-    session.permanant = True
     session['user_email'] = email
     flash(u'Logged in successfully')
     return redirect(request.args.get('next') or url_for('index'))
    
-
-@app.route('/editor/<string:s>', methods=['GET'])
-@login_required
-def editor(s):
-    return render_template('editor.html')
-
-
+   
 @app.route('/editor', methods=['POST'])
 @login_required
-def new_subject():
+def editor():
     subject = request.form["subject"]
     return render_template('editor.html', subject=subject)
 
+    
+@app.route('/editor', methods=['POST'])
+def insertInfo():
+    content = request.form["content"]   
+    user_id = g.user.id
+    db_insert = Post(content, user_id)
+    db.session.add(db_insert)
+    db.session.commit()    
+    return redirect(url_for('savedInfo', id=db_insert.id))
 
-@app.route('/savedInfo', methods=['GET'])
+
+@app.route('/savedInfo', methods=['POST'])
 @login_required
 def savedInfo():
-    return render_template('savedInfo.html')
+    subject = request.form["subject"]
+    return render_template('savedInfo.html', subject=subject)
+    
+    
+@app.route('/activation')
+@login_required
+def user_infomation():
+    active = User.query.filter_by(email=session.get('user_email')).first()
+    return render_template('user_infomation.html', acitve=active)
 
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    session.pop('user_email', None)
     return redirect(url_for('index'))
     
     

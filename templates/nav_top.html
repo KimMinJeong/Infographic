@@ -17,7 +17,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
-      	<li><a href="{{url_for('editor', s = subject)}}">Editor</a></li>
+      	<li><a href="{{url_for('editor')}}">Editor</a></li>
       	<li><a href="{{url_for('savedInfo')}}">saved infographics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -29,9 +29,15 @@
        		<input type="submit" class="btn btn-primary" id="login_button" value="Login" />
        		</form>
 		</li>
-		<li>
-			<button class="btn btn-danger" id="logout_button"><a href="{{url_for('logout')}}">Logout</a></button>
-		</li>
+		<li class="dropdown" id="info_drop">
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">HI! {{session.get('user_email')}}<b class="caret"> </b></a>
+      		<ul class="dropdown-menu">
+	            <li><a href="{{url_for('user_infomation',email=session.get('user_email'))}}">MyInfomation</a></li>
+	            <li class="divider"> </li>
+	            <li><a href="#">Help</a></li>
+	            <li id="logout_button"><a href="{{url_for('logout')}}">Logout</a></li>
+          	</ul>
+	    </li>
       </ul>
     </div><!-- /.navbar-collapse -->
 
@@ -68,16 +74,16 @@
 </nav>
 
 {% if session.get('user_email') %}
-<script>
+<script type="text/javascript">
 		$("#login_button").hide();
-		$("#logout_button").show();
 		$("#signup_button").hide();
+		$("#info_drop").show();
 </script>
-
 {% else %}
-<script>
-		$("#logout_button").hide();
+<script type="text/javascript">
 		$("#login_button").show();
+		$("#signup_button").show();
+		$("#info_drop").hide();
 </script>
 {% endif %}
 {% endblock %}

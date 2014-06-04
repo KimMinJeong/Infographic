@@ -129,7 +129,7 @@
 								<li id="text-H2" data-oType="text" data-tType="H2" class="draggable_t"><a>Subtitle</a></li>
 								<li id="text-H3" data-oType="text" data-tType="H3" class="draggable_t"><a>Subtitle 2</a></li>
 								<li id="text-H4" data-oType="text" data-tType="H4" class="draggable_t"><a>Subtitle 3</a></li>
-								<li id="text-T1" data-oType="text" data-tType="T1" class="draggable_t"><a>Body Text</a></li>
+								<li id="text-H5" data-oType="text" data-tType="H5" class="draggable_t"><a>Body Text</a></li>
 							</ul>
 			      		</div>
 			    	</div>
@@ -137,42 +137,24 @@
 		  		</div>
 			</div>
 		</div>
-		<form id="form1">
-			<div class="col-md-9 col-sm-9 col-xs-12">
-				<div class="ToolMenu">
-					<input type="button" class="canvas_clear_btn" value="New">
-					<small>Auto saved at 12:00</small>
-					<input type="button" id="save_btn" value="Save">
-					<div class="color-box"> </div>
-					<div id="dialog-confirm"> </div>
-				</div>
-				<div id="droppable" class="myCanvas"> </div>
+		<div class="col-md-9 col-sm-9 col-xs-12">
+			<div class="ToolMenu">
+				<button class="canvas_clear_btn" type="button">New</button>
+				<small>Auto saved at 12:00</small>
+				<button type="button">Save</button>
+				<div class="color-box"> </div>
+				<div id="dialog-confirm"> </div>
 			</div>
-		</form>
+			<div class="finalX"> </div>
+			<div class="finalY"> </div>
+			<div id="droppable" class="myCanvas" name="content"> 
+				<canvas id="canvas" width="800" height="500"> </canvas>
+			</div>
+		</div>
 	</div>
 </div>
 
-
-<script type="text/javascript">
-	$('#save_btn').click(function(){
-		alert('저장 버튼 클릭');
-		OnFormCheck();
-		return;
-	});
-	function OnFormCheck(){
-		var item = $('.imgSize-1').val();
-		
-		var objdata = new data(item);
-		var senddata = json.stringify(objdata);
-		alert(senddata);
-		return;
-	}
-	function data(m_item)
-	{
-		this.item = m_item;
-	}
-</script>
-<script type="text/javascript">
+<script type="text/javascript">   //text 드래그 
 $(function(){
 	
 	var counts =[0];
@@ -180,24 +162,9 @@ $(function(){
 	var $text_H2 = $('<textarea id="text_H2">SubTitle</textarea>');
 	var $text_H3 = $('<textarea id="text_H3">SubTitle2</textarea>');
 	var $text_H4 = $('<textarea id="text_H4">SubTitle3</textarea>');
-	var $text_T1 = $('<textarea id="text_H5">Body Text</textarea>');
+	var $text_H5 = $('<textarea id="text_H5">Body Text</textarea>');
 	var resizeOpts = { handles : "all", autoHide: false};
 	
-	$('.draggable_t').draggable({
-		helper :'clone',
-		start: function(){
-			$('#droppable').append($text_H1);
-			$('#droppable').append($text_H2);
-			$('#droppable').append($text_H3);
-			$('#droppable').append($text_H4);
-			$('#droppable').append($text_T1);
-			counts[0]++;
-		}
-	});
-	$('#droppable').droppable({
-		accept :'.draggable_t',
-		drop: handleDropEvent
-	}); 
 	function handleDropEvent(event, ui)
 	{
 		if(ui.draggable.hasClass("draggable"))
@@ -229,6 +196,29 @@ $(function(){
 </script>
 
 <script type="text/javascript">
+    var canvas = new fabric.Canvas('canvas');
+
+    var rect = new fabric.Rect({
+        top : 100,
+        left : 100,
+        width : 60,
+        height : 70,
+        fill : 'red'
+    });
+
+    canvas.add(rect);
+</script>
+
+<script type="text/javascript">    //이미지 드래그
+var canvas = new fabric.Canvas('canvas');
+var imgElement = document.getElementByClassName("imgSize-1");
+var imgInstance = new fabric.Image(imgElement, {
+  left: 100,
+  top: 100,
+  angle: 30,
+  opacity: 0.85
+});
+canvas.add(imgInstance);
 $(function(){
 	var counts = [0];
 	var i = 0;
@@ -237,14 +227,14 @@ $(function(){
 	$('.draggable').draggable({
 		helper :'clone',
 		start: function(){
-		counts[0]++;
-		i++;
-		
+			counts[0]++;
+			i++;
 		}
 	});
 	$('#droppable').droppable({
 		accept :'.draggable',
 		drop: handleDropEvent
+		
 	}); 
 	function handleDropEvent(event, ui)
 	{
@@ -255,14 +245,14 @@ $(function(){
 			$("#droppable img").addClass("imgSize-"+ counts[0]);
 			$("#droppable .item-"+ counts[0]).removeClass("draggable ui-draggable ui-draggable-dragging");
 	
-			$(".item-"+ counts[0]).dblclick(function() {
+			$(".item-"+ counts[0]).dblclick(function() {    //img remove
 				$(this).remove();
 			});
 		
 			make_draggable($(".item-"+ counts[0])); 
-            $(".imgSize-"+ counts[0]).resizable(resizeOpts);
+            $(".imgSize-"+ counts[0]).resizable(resizeOpts);   // img resize
             
-            $('.canvas_clear_btn').click(NewInfographic);
+            $('.canvas_clear_btn').click(NewInfographic);   //new button
                 function NewInfographic(){
                	$("#dialog-confirm").html("이전의 내용이 모두 없어집니다.");
            		$('#dialog-confirm').dialog({	
@@ -295,6 +285,7 @@ $(function(){
 		}
 	}
 });
+
 	var zIndex=0;
 	function make_draggable(elements)
 	{

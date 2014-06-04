@@ -12,7 +12,11 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="{{url_for('static',filename='css/bootstrap-theme.css')}}">
 		<link rel="stylesheet" type="text/css" media="screen" href="{{url_for('static',filename='css/jquery-ui.css')}}">
 		<link rel="stylesheet" type="text/css" media="screen" href="{{url_for('static',filename='css/colpick.css')}}">
-		
+		<link rel="stylesheet" type="text/css" href="style.css" media="only all and (max-width: 480px)" id="stylesheet-480" />
+   		<link rel="stylesheet" type="text/css" href="style.css" media="only all and (min-width: 480px) and (max-width: 1024px)" id="stylesheet-1024" />
+   		<link rel="stylesheet" type="text/css" href="style.css" media="only all and (min-width: 1200px)" id="stylesheet-1280" />
+   	
+   	
 		<script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
 		<script type="text/javascript" src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
 		<script type="text/javascript" src="{{url_for('static',filename='js/jquery.js')}}"></script>
@@ -25,6 +29,9 @@
 		<script type="text/javascript" src="{{url_for('static',filename='js/colpick.js')}}"></script>
 		<script type="text/javascript" src="{{url_for('static',filename='js/tab.js')}}"></script>
 		<script type="text/javascript" src="{{url_for('static',filename='js/tooltip.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static',filename='js/fabric.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static',filename='js/fabric.min.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static',filename='js/dropdown.js')}}"></script>
 	</head>
 	<body>
 		{% block body %} {% endblock %}

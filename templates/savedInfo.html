@@ -8,7 +8,9 @@
 	    <div class="thumbnail">
 	      <img src="../static/img/300X200.PNG" alt="...">
 	      <div class="caption">
-	        <h3>Sky</h3>
+	      	<form action="{{url_for('savedInfo',subject = subject)}}" method="post">
+	        	<h3>{{ subject }}</h3>
+	        </form>
 	        <p>
 	        	<button type="button" class="btn btn-primary">Edit</button> 
 	        	<button type="button" class="btn btn-danger">Delete</button>
