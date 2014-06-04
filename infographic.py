@@ -22,7 +22,8 @@ import socket
 
 app = Flask(__name__)
 
-SQLALCHEMY_DATABASE_URI = 'postgres://jwnzstqqoxmabv:AnQtqsuw704xFBd-FSle8KkzaQ@ec2-54-235-245-180.compute-1.amazonaws.com:5432/d71cl0hu1vi2r3'
+SQLALCHEMY_DATABASE_URI = os.environ.get(
+                                         'DATABASE_URL','postgresql://postgres:1111@localhost:5432/infographic')
 
 db = SQLAlchemy(app)
 
