@@ -114,7 +114,7 @@ class Comment(db.Model):
 
 
 db.session.commit()
-db.create_all()
+
 @app.route('/t2', methods=['GET'])
 def t2():
     return render_template('t2.html')
