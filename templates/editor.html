@@ -139,8 +139,8 @@
 		</div>
 		
 			<div class="col-md-9 col-sm-9 col-xs-12">
-				<form action="{{url_for('editor')}}" method="post">
-				<h3 name="subject">subject </h3>
+				<form action="{{url_for('editor',subject = subject)}}" method="post">
+				<h3 name="subject">{{ subject }}</h3>
 				</form>
 				<div class="ToolMenu">
 					<button type="button" class="canvas_clear_btn">New</button>
