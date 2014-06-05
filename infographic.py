@@ -187,13 +187,12 @@ def insertInfo():
     return redirect(url_for('savedInfo', id=db_insert.id))
 
 
-@app.route('/savedInfo', methods=['POST'])
+@app.route('/savedInfo', methods=['GET'])
 @login_required
 def savedInfo():
-    subject = request.form["subject"]
-    return render_template('savedInfo.html', subject=subject)
+    return render_template('savedInfo.html')
     
-    
+
 @app.route('/activation')
 @login_required
 def user_infomation():

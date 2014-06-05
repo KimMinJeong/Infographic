@@ -8,13 +8,10 @@
 	    <div class="thumbnail">
 	      <img src="../static/img/300X200.PNG" alt="...">
 	      <div class="caption">
-	      	<form action="{{url_for('savedInfo',subject = subject)}}" method="post">
-	        	<h3>{{ subject }}</h3>
-	        </form>
+	        <h3>subject</h3>
 	        <p>
-	        	<button type="button" class="btn btn-primary">Edit</button> 
-	        	<button type="button" class="btn btn-danger">Delete</button>
-	        </p>
+	        	<input type="button" class="btn btn-primary" value="Edit">
+	        	<input type="button" class="btn btn-danger" value="Delete">
 	      </div>
 	    </div>
 	  </div>

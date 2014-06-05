@@ -17,8 +17,6 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
-      	<li><a href="{{url_for('editor')}}">Editor</a></li>
-      	<li><a href="{{url_for('savedInfo')}}">saved infographics</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li>
@@ -32,7 +30,7 @@
 		<li class="dropdown" id="info_drop">
         	<a href="#" class="dropdown-toggle" data-toggle="dropdown">HI! {{session.get('user_email')}}<b class="caret"> </b></a>
       		<ul class="dropdown-menu">
-	            <li><a href="{{url_for('user_infomation',email=session.get('user_email'))}}">MyInfomation</a></li>
+	            <li id="save_button"><a href="{{url_for('savedInfo')}}">MyInfomation</a></li>
 	            <li class="divider"> </li>
 	            <li><a href="#">Help</a></li>
 	            <li id="logout_button"><a href="{{url_for('logout')}}">Logout</a></li>
@@ -78,12 +76,14 @@
 		$("#login_button").hide();
 		$("#signup_button").hide();
 		$("#info_drop").show();
+		$("#save_button").show();
 </script>
 {% else %}
 <script type="text/javascript">
 		$("#login_button").show();
 		$("#signup_button").show();
 		$("#info_drop").hide();
+		$("#save_button").hide();
 </script>
 {% endif %}
 {% endblock %}
