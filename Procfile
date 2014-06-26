@@ -1,3 +1,3 @@
 
-web: python infographic/infographic.py
+web: python infographics/infographic.py
 
