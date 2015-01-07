@@ -6,9 +6,9 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+        <span class="icon-bar"> </span>
+        <span class="icon-bar"> </span>
+        <span class="icon-bar"> </span>
       </button>
       <a class="navbar-brand" href="#">InfoGraphics</a>
     </div>
@@ -17,81 +17,73 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{{url_for('index')}}">Home</a></li>
-      	<li><a href="{{url_for('editor')}}">Editor</a></li>
-      	<li>Saved file</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
       	<li>
-      		<button class="btn btn-primary" data-toggle="modal" data-target="#signModal">SignUp</button>
+      		<button class="btn btn-primary" id="signup_button" data-toggle="modal" data-target="#signModal">SignUp</button>
       	</li>
        	<li>
-       		<button class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Login</button>
+       		<form action="{{url_for('login_page')}}">
+       		<input type="submit" class="btn btn-primary" id="login_button" value="Login" />
+       		</form>
 		</li>
+		<li class="dropdown" id="info_drop">
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">HI! {{session.get('user_email')}}<b class="caret"> </b></a>
+      		<ul class="dropdown-menu">
+	            <li id="save_button"><a href="{{url_for('savedInfo')}}">MyInfomation</a></li>
+	            <li class="divider"> </li>
+	            <li><a href="#">Help</a></li>
+	            <li id="logout_button"><a href="{{url_for('logout')}}">Logout</a></li>
+          	</ul>
+	    </li>
       </ul>
     </div><!-- /.navbar-collapse -->
-    
-    
+
+   
    	<div class="col-md-12 col-xs-12 col-sm-12">
-	    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">Create your account!!</h4>
-		      </div>
-		      
-		      <div class="modal-body">
-		     	<input type="text" placeholder="Email Address">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="First Name">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Second Name">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Password">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Confirm Password">
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary">Create Account</button>
-		      </div>
-		    </div>
-		  </div>
-		</div><!-- /.modal-->
-		
-		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		        <h4 class="modal-title">LOGIN</h4>
-		      </div>
-		      
-		      <div class="modal-body">
-		     	<input type="text" placeholder="Email Address">
-		     	<br/>
-		     	<br/>
-		     	<input type="text" placeholder="Password">
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary">Login</button>
-		       	<br/>
-		        <small>Fot Email or Password</small><a href="#">Click Here!</a>
-		      </div>
-		    </div>
-		  </div>
-		</div><!-- /.modal-->
+   	  <form action="{{ url_for('signup') }}" class="form-horizontal" method="post">
+		    <div class="modal fade" id="signModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title">Create your account!!</h4>
+			      </div>
+			      
+			      <div class="modal-body">
+			     	<input type="email" name="email" class="form-control" placeholder="Email Address">
+			     	<br/>
+			     	<input type="text" name="name" class="form-control" placeholder="Name">
+			     	<br/>
+			     	<input type="password" name="password" class="form-control" placeholder="Password">
+			     	<br/>
+			     	<input type="password" name="password2" class="form-control" placeholder="Confirm Password">
+			      </div>
+			      <div class="modal-footer">
+			        <input type="submit" class="btn btn-primary create_account_btn" value="Create Account">
+			      </div>
+			    </div>
+			  </div>
+			</div><!-- /.modal-->
+		</form>
 	</div>
+	
   </div><!-- /.container-->
 </nav>
 
-
+{% if session.get('user_email') %}
 <script type="text/javascript">
-	$('#myModal').on('hidden', function () {
-  		$('#myModal').modal({ backdrop:'static'});
-	});
+		$("#login_button").hide();
+		$("#signup_button").hide();
+		$("#info_drop").show();
+		$("#save_button").show();
 </script>
+{% else %}
+<script type="text/javascript">
+		$("#login_button").show();
+		$("#signup_button").show();
+		$("#info_drop").hide();
+		$("#save_button").hide();
+</script>
+{% endif %}
 {% endblock %}

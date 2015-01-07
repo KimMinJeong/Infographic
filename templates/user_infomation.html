@@ -1,0 +1,18 @@
+{% extends "nav_top.html" %}
+{% block body %}
+{{ super() }}
+<form action="{{url_for('user_infomation',active=session.get('user_email'))}}" method="get">
+<div class="row">
+	<div class="container">
+		<div class="col-xs-4 col-md-4 col-sm-4">
+			이름 : {{session.get('user_name')}}
+			이메일 : {{session.get('user_email')}}
+		</div>
+		<div class="col-xs-4 col-md-8 col-sm-8">
+			<h1>My Infomation</h1>
+		</div>
+		
+	</div>
+</div>
+</form>
+{% endblock %}
